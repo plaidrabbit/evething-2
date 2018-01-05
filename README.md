@@ -40,6 +40,7 @@ Docker Install Steps
 3.  Start services: `docker-compose up`.
 4.  Connect to the django containter : `docker exec -it <project_dir>_django_1 "/bin/bash"`.
 5.  Execute the first setup script: `sh docker/first-setup.sh`.
+    (If necessary, run dos2unix on the shell script first: `dos2unix docker/first-setup.sh`)
 6.  Disconnect from the django container.
 
 Common Install Steps
