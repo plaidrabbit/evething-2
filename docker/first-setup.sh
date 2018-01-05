@@ -10,6 +10,6 @@ fi
 npm install
 npm install npm-check-updates
 
-/evething/manage.py migrate --noinput
-/evething/import.py
-/evething/manage.py createsuperuser
+python manage.py migrate --noinput
+python import.py
+python manage.py createsuperuser
