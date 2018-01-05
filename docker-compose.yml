@@ -22,8 +22,7 @@ services:
         dockerfile: docker/Dockerfile-dev
       image: evething_django:latest
       user: evething
-      #command: bash -c ". /evething-env/bin/activate && /evething/manage.py runserver 0.0.0.0:8000"
-      command: bash -c ". /evething-env/bin/activate && /evething/manage.py runserver django:8000"
+      command: bash -c ". /evething-env/bin/activate && python /evething/manage.py runserver django:8000"
       volumes:
           - .:/evething  # mount current directory inside container
       ports:
