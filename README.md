@@ -31,6 +31,17 @@ will be installed using pip in 'Common Install Steps' below:
   your 'import' database. If you can't do that, [zofu](http://zofu.no-ip.de/) has MySQL and
   Postgres versions that take a long, long time to import.
 
+Docker Install Steps
+--------------------
+1.  Build services with docker-compose: `docker-compose build`.
+2.  Copy evething/local\_settings.docker.py to evething/local\_settings.py
+    then open local\_settings.py in some sort of text editor and edit
+    settings.
+3.  Start services: `docker-compose up`.
+4.  Connect to the django containter : `docker exec -it <project_dir>_django_1 "/bin/bash"`.
+5.  Execute the first setup script: `sh docker/first-setup.sh`.
+6.  Disconnect from the django container.
+
 Common Install Steps
 --------------------
 1.  Make a new virtualenv: `virtualenv thingenv`.
