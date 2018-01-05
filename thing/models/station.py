@@ -23,8 +23,6 @@
 # OF SUCH DAMAGE.
 # ------------------------------------------------------------------------------
 
-from datetime import datetime, timedelta
-
 from django.db import models
 
 from evething import local_settings
@@ -60,7 +58,6 @@ class Station(models.Model):
 
     class Meta:
         app_label = 'thing'
-
 
     # Used to add structures
     @staticmethod
@@ -105,10 +102,11 @@ class Station(models.Model):
                     id=id,
                     structure=True
                 )
-                if r != None:
-                    station.name = r['name'],
-                    station.system_id = r['solar_system_id'],
-                    station.item_id = r['type_id']
+                if r is not None:
+                    station.name = r['name']
+                    station.system_id = r['solar_system_id']
+                    if "type_id" in r:
+                        station.item_id = r['type_id']
 
             station.save()
             return station
@@ -116,7 +114,6 @@ class Station(models.Model):
         except Exception:
             # We crashed out, it must not be a structure
             return None
-
 
     def __unicode__(self):
         return self.name
@@ -136,7 +133,8 @@ class Station(models.Model):
             a_parts = parts[0].split()
             try:
                 # Change the roman annoyance to a proper digit
-                out.append('%s %s' % (a_parts[0], str(roman_to_int(a_parts[1]))))
+                out.append('%s %s' %
+                           (a_parts[0], str(roman_to_int(a_parts[1]))))
 
                 # Moooon
                 if parts[1].startswith('Moon') and len(parts) == 3:
