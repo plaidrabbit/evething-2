@@ -243,10 +243,11 @@ class ESI_CharacterInfo(APITask):
                 flat=True
             ))
             asset_names = self.api.post("/v1/characters/$id/assets/names/", data=json.dumps(items))
-            for asset in asset_names:
-                db_asset = Asset.objects.get(asset_id=asset['item_id'])
-                db_asset.name = asset['name']
-                db_asset.save()
+            if asset_names is not None:
+                for asset in asset_names:
+                    db_asset = Asset.objects.get(asset_id=asset['item_id'])
+                    db_asset.name = asset['name']
+                    db_asset.save()
 
             # Rebuild asset summary
             AssetSummary.objects.filter(character=character).delete()
@@ -307,6 +308,7 @@ class ESI_CharacterInfo(APITask):
         ## Industry
         with db.transaction.atomic():
             jobs = self.api.get("/v1/characters/$id/industry/jobs/")
+            jobs += self.api.get("/v1/corporations/%s/industry/jobs/" % character.corporation_id)
             for job in jobs:
                 db_job = IndustryJob.objects.filter(job_id=job['job_id'])
                 if len(db_job) == 1:
@@ -332,7 +334,7 @@ class ESI_CharacterInfo(APITask):
 
                         # POSes are getting removed soon so we're just going to
                         # assume the facility is a station/structure
-                        system_id=Station.get_or_create(job['facility_id'], self.api).system_id
+                        system_id=Station.get_or_create(job['facility_id'], self.api).system.id
                     )
 
                 # Update other values

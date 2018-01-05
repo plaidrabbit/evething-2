@@ -211,7 +211,8 @@ ESI_SCOPES = [
     "esi-markets.read_character_orders.v1",
     "esi-contracts.read_character_contracts.v1",
     "esi-characters.read_fatigue.v1",
-    "esi-clones.read_implants.v1"
+    "esi-clones.read_implants.v1",
+    "esi-industry.read_corporation_jobs.v1",
 ]
 
 # Rename the default queue
