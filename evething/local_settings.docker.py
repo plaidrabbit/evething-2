@@ -25,8 +25,8 @@ DATABASES = {
         'NAME': 'evething',                       # Or path to database file if using sqlite3.
         'USER': 'evething',                       # Not used with sqlite3.
         'PASSWORD': 'evething',                   # Not used with sqlite3.
-        'HOST': os.environ.get('DB_PORT_5432_TCP_ADDR'), # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                       # Set to empty string for default. Not used with sqlite3.
+        'HOST': 'db', # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5432',                       # Set to empty string for default. Not used with sqlite3.
     },
     # this database should contain a current version of the Static Data Export
     'import': {
@@ -88,17 +88,17 @@ STAGGER_APITASK_STARTUP = True
 # Market Data URL for prices
 # - works on both eve-central or goonmetrics.
 # PRICE_URL = 'http://api.eve-central.com/api/marketstat/?station_id=60003760&typeid=%s'
-PRICE_URL = 'http://goonmetrics.com/api/price_data/?station_id=60003760&type_id=%s'
+PRICE_URL = 'https://market.fuzzwork.co.uk/aggregates/?station=60003760&types=%s'
 
 # Celery broker URL - http://docs.celeryproject.org/en/latest/getting-started/first-steps-with-celery.html#choosing-a-broker
-BROKER_URL = 'redis://%s/0' % os.environ.get('REDIS_1_PORT_6379_TCP_ADDR')
+BROKER_URL = 'redis://redis:6379/0'
 
 # https://docs.djangoproject.com/en/dev/topics/cache/
 # django-redis config
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        "LOCATION": 'redis://%s/1' % os.environ.get('REDIS_1_PORT_6379_TCP_ADDR'),
+        "LOCATION": 'redis://redis:6379/1',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'CONNECTION_POOL_KWARGS': {'max_connections': 25}
@@ -109,3 +109,16 @@ CACHES = {
 # Use redis as the session handler
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
+
+# ESI Details
+# When you create the ESI application at developers.eveonline.com you should
+# fill in this section
+ESI_URL = "https://esi.tech.ccp.is"
+ESI_UPDATE_INTERVAL = 60  # How often to update in minutes
+ESI_RETRIES = 15
+ESI_DATASOURCE = "tranquility"
+ESI_CLIENT_ID = ''
+ESI_SECRET_KEY = ''
+ESI_CALLBACK_URL = ''
+
+
